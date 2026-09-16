@@ -1,8 +1,8 @@
 import React from 'react';
-import { Clock, Calendar, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Clock, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function TimelineSection() {
+export default function TimelineSection({ isLightMode }) {
   const timelineEvents = [
     {
       year: '2024',
@@ -37,7 +37,7 @@ export default function TimelineSection() {
   ];
 
   return (
-    <section className="py-28 relative bg-[#171411] border-t border-[#955D31]/20">
+    <section className="py-28 relative theme-section-bg border-t theme-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
@@ -53,11 +53,11 @@ export default function TimelineSection() {
               <Clock className="w-3.5 h-3.5 text-[#E87532]" />
               TEMPORAL ATTRIBUTION TIMELINE
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-[#F3EEE7] font-mono tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black theme-text-primary font-mono tracking-tight">
               Chronological Footprint Evolution
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#A9A097] font-mono max-w-md">
+          <p className="text-xs sm:text-sm theme-text-muted font-mono max-w-md">
             Progressive evidence accumulation over a 24-month investigation window.
           </p>
         </motion.div>
@@ -79,24 +79,24 @@ export default function TimelineSection() {
                   <span className="text-2xl font-black text-[#E87532]">
                     {evt.year}
                   </span>
-                  <span className="text-[10px] text-[#887760] font-bold">
+                  <span className="text-[10px] theme-text-muted font-bold">
                     STEP 0{idx + 1}
                   </span>
                 </div>
-                <h3 className="text-base font-bold font-mono text-[#F3EEE7]">
+                <h3 className="text-base font-bold font-mono theme-text-primary">
                   {evt.title}
                 </h3>
-                <span className="text-[11px] font-mono text-[#955D31] font-bold block">
+                <span className="text-[11px] font-mono text-orange-600 font-bold block">
                   {evt.subtitle}
                 </span>
-                <p className="text-xs text-[#A9A097] leading-relaxed pt-1">
+                <p className="text-xs theme-text-muted leading-relaxed pt-1">
                   {evt.description}
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-white/5 text-[10px] font-mono text-[#BAAD9A] flex items-center justify-between">
+              <div className="pt-4 border-t theme-border text-[10px] font-mono theme-text-muted flex items-center justify-between">
                 <span>Signal Verified</span>
-                <ShieldCheck className="w-3.5 h-3.5 text-[#955D31]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#E87532]" />
               </div>
             </motion.div>
           ))}

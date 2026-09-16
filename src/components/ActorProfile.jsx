@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { UserCheck, ShieldAlert, Key, Globe, DollarSign, Terminal, Download, ArrowUpRight, CheckCircle2, Copy } from 'lucide-react';
+import { UserCheck, Globe, Terminal, Download, CheckCircle2, Copy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function ActorProfile() {
+export default function ActorProfile({ isLightMode }) {
   const [copiedWallet, setCopiedWallet] = useState(false);
 
   const actorData = {
@@ -42,7 +42,7 @@ export default function ActorProfile() {
   };
 
   return (
-    <section id="actor-profile" className="py-28 relative bg-[#171411] border-t border-[#955D31]/20">
+    <section id="actor-profile" className="py-28 relative theme-section-bg border-t theme-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
@@ -58,13 +58,13 @@ export default function ActorProfile() {
               <UserCheck className="w-3.5 h-3.5 text-[#E87532]" />
               DARKTRACE ACTOR PROFILE
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-[#F3EEE7] font-mono tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black theme-text-primary font-mono tracking-tight">
               TARGET: {actorData.codename}
             </h2>
           </div>
           <div className="flex items-center gap-3 font-mono text-xs">
-            <span className="text-[#A9A097]">Attribution Hypothesis:</span>
-            <span className="px-3 py-1 rounded-full bg-[#2A241F] border border-[#E87532]/40 text-[#E87532] font-bold">
+            <span className="theme-text-muted">Attribution Hypothesis:</span>
+            <span className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-[#E87532] font-bold">
               {actorData.confidenceScore}% INVESTIGATIVE CONFIDENCE
             </span>
           </div>
@@ -74,8 +74,8 @@ export default function ActorProfile() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 font-mono text-xs">
           {actorData.stats.map((st, i) => (
             <div key={i} className="spatial-card p-4 rounded-2xl text-center space-y-1">
-              <span className="text-[10px] text-[#A9A097] uppercase block">{st.label}</span>
-              <span className="text-sm font-bold text-[#F3EEE7]">{st.count}</span>
+              <span className="text-[10px] theme-text-muted uppercase block">{st.label}</span>
+              <span className="text-sm font-bold theme-text-primary">{st.count}</span>
             </div>
           ))}
         </div>
@@ -89,25 +89,25 @@ export default function ActorProfile() {
           className="spatial-card p-6 sm:p-10 rounded-3xl space-y-8"
         >
           {/* Top Metadata */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-8 border-b border-white/10 font-mono text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-8 border-b theme-border font-mono text-xs">
             <div>
-              <span className="text-[#A9A097] uppercase text-[10px] block">Threat Syndicate</span>
-              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.threatGroup}</div>
+              <span className="theme-text-muted uppercase text-[10px] block">Threat Syndicate</span>
+              <div className="theme-text-primary font-bold text-sm">{actorData.threatGroup}</div>
             </div>
             <div>
-              <span className="text-[#A9A097] uppercase text-[10px] block">Language & Stylometrics</span>
-              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.primaryLanguage}</div>
+              <span className="theme-text-muted uppercase text-[10px] block">Language & Stylometrics</span>
+              <div className="theme-text-primary font-bold text-sm">{actorData.primaryLanguage}</div>
             </div>
             <div>
-              <span className="text-[#A9A097] uppercase text-[10px] block">First Seen / Last Active</span>
-              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.lastActive}</div>
+              <span className="theme-text-muted uppercase text-[10px] block">First Seen / Last Active</span>
+              <div className="theme-text-primary font-bold text-sm">{actorData.lastActive}</div>
             </div>
             <div>
-              <span className="text-[#A9A097] uppercase text-[10px] block">Primary Bitcoin Wallet</span>
-              <div className="text-[#BAAD9A] font-bold text-sm flex items-center justify-between">
+              <span className="theme-text-muted uppercase text-[10px] block">Primary Bitcoin Wallet</span>
+              <div className="text-[#E87532] font-bold text-sm flex items-center justify-between">
                 <span className="truncate">{actorData.financialTrace}</span>
-                <button onClick={handleCopyWallet} className="ml-2 hover:text-white">
-                  {copiedWallet ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <button onClick={handleCopyWallet} className="ml-2 hover:opacity-80">
+                  {copiedWallet ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
               </div>
             </div>
@@ -118,14 +118,16 @@ export default function ActorProfile() {
             
             {/* Forum Aliases */}
             <div className="lg:col-span-6 space-y-3">
-              <span className="text-[#BAAD9A] font-bold uppercase tracking-wider block">Connected Forum Aliases</span>
+              <span className="theme-text-primary font-bold uppercase tracking-wider block">Connected Forum Aliases</span>
               {actorData.knownAliases.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-[#171411] border border-white/5 flex items-center justify-between">
+                <div key={idx} className={`p-4 rounded-2xl border flex items-center justify-between ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/5'
+                }`}>
                   <div>
-                    <span className="text-[#A9A097] text-[10px] uppercase block">{item.forum}</span>
-                    <span className="text-[#F3EEE7] font-bold">{item.handle}</span>
+                    <span className="theme-text-muted text-[10px] uppercase block">{item.forum}</span>
+                    <span className="theme-text-primary font-bold">{item.handle}</span>
                   </div>
-                  <span className="px-2.5 py-1 rounded bg-[#211C18] border border-white/10 text-[#BAAD9A] text-[10px]">
+                  <span className="px-2.5 py-1 rounded border text-[10px] font-bold text-[#E87532] bg-orange-500/10 border-orange-500/30">
                     {item.rank}
                   </span>
                 </div>
@@ -134,11 +136,13 @@ export default function ActorProfile() {
 
             {/* Infrastructure Nodes */}
             <div className="lg:col-span-6 space-y-3">
-              <span className="text-[#BAAD9A] font-bold uppercase tracking-wider block">Linked Technical Infrastructure</span>
+              <span className="theme-text-primary font-bold uppercase tracking-wider block">Linked Technical Infrastructure</span>
               {actorData.linkedInfrastructure.map((item, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-[#171411] border border-white/5 flex items-center justify-between">
-                  <span className="text-[#A9A097] text-[11px]">{item.type}</span>
-                  <span className="text-[#F3EEE7] font-bold">{item.value}</span>
+                <div key={idx} className={`p-4 rounded-2xl border flex items-center justify-between ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/5'
+                }`}>
+                  <span className="theme-text-muted text-[11px]">{item.type}</span>
+                  <span className="theme-text-primary font-bold">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -146,11 +150,13 @@ export default function ActorProfile() {
           </div>
 
           {/* Action Bar */}
-          <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-            <span className="text-[#A9A097]">Attribution Brief #DARKWOLF23-2025</span>
+          <div className="pt-6 border-t theme-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+            <span className="theme-text-muted">Attribution Brief #DARKWOLF23-2025</span>
             <button
               onClick={() => alert('Exporting DARKWOLF23 Dossier PDF...')}
-              className="px-5 py-2.5 rounded-xl font-bold bg-[#211C18] border border-white/10 hover:border-[#E87532]/40 text-[#F3EEE7] transition-all flex items-center gap-2"
+              className={`px-5 py-2.5 rounded-xl font-bold border transition-all flex items-center gap-2 ${
+                isLightMode ? 'bg-stone-100 border-stone-300 text-stone-900 hover:bg-stone-200' : 'bg-[#211C18] border-white/10 text-[#F3EEE7] hover:border-[#E87532]/40'
+              }`}
             >
               <Download className="w-4 h-4 text-[#E87532]" /> Export Dossier PDF
             </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Terminal, ShieldAlert, CheckCircle, AlertOctagon, RefreshCw, Download, ShieldCheck, Search, Hash } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function Scanner({ targetQuery, onResetTarget }) {
+export default function Scanner({ isLightMode, targetQuery, onResetTarget }) {
   const [inputQuery, setInputQuery] = useState(targetQuery || '');
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
@@ -90,7 +90,7 @@ export default function Scanner({ targetQuery, onResetTarget }) {
   };
 
   return (
-    <section id="scanner" className="py-28 relative bg-[#171411]">
+    <section id="scanner" className="py-28 relative theme-section-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Header */}
@@ -106,17 +106,17 @@ export default function Scanner({ targetQuery, onResetTarget }) {
               <Terminal className="w-3.5 h-3.5 text-[#E87532]" />
               INVESTIGATOR WORKSPACE
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-[#F3EEE7] font-mono tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black theme-text-primary font-mono tracking-tight">
               THREAT INVESTIGATION
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#A9A097] font-mono max-w-md">
+          <p className="text-xs sm:text-sm theme-text-muted font-mono max-w-md">
             Query dark web handles, Bitcoin wallets, PGP keys, or domain indicators.
           </p>
         </motion.div>
 
         {/* Large Workspace Card */}
-        <div className="spatial-card p-6 sm:p-10 rounded-3xl border border-[#955D31]/40 space-y-8 font-mono">
+        <div className="spatial-card p-6 sm:p-10 rounded-3xl space-y-8 font-mono">
           
           {/* Search Bar Container */}
           <div className="flex flex-col sm:flex-row gap-3">
@@ -127,13 +127,15 @@ export default function Scanner({ targetQuery, onResetTarget }) {
                 value={inputQuery}
                 onChange={(e) => setInputQuery(e.target.value)}
                 placeholder="[ handle / wallet / PGP / domain ]"
-                className="w-full pl-11 pr-4 py-4 bg-[#171411] text-[#F3EEE7] text-xs rounded-2xl border border-white/10 focus:outline-none focus:border-[#E87532] transition-colors"
+                className={`w-full pl-11 pr-4 py-4 text-xs rounded-2xl border transition-colors ${
+                  isLightMode ? 'bg-stone-50 text-stone-900 border-stone-300 focus:border-orange-500' : 'bg-[#171411] text-[#F3EEE7] border-white/10 focus:border-[#E87532]'
+                }`}
               />
             </div>
             <button
               onClick={() => runScan(inputQuery)}
               disabled={isScanning || !inputQuery.trim()}
-              className="px-8 py-4 rounded-2xl font-bold text-xs text-[#171411] bg-[#E87532] hover:bg-[#955D31] hover:text-[#F3EEE7] disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,117,50,0.3)] shrink-0"
+              className="px-8 py-4 rounded-2xl font-bold text-xs text-white bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 disabled:opacity-50 transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 shrink-0"
             >
               {isScanning ? <RefreshCw className="w-4 h-4 animate-spin" /> : <ShieldAlert className="w-4 h-4" />}
               {isScanning ? 'RUNNING INVESTIGATION...' : 'INVESTIGATE'}
@@ -142,22 +144,26 @@ export default function Scanner({ targetQuery, onResetTarget }) {
 
           {/* Vertical Progress Line State */}
           {isScanning && (
-            <div className="p-6 rounded-2xl bg-[#171411] border border-[#E87532]/40 relative overflow-hidden space-y-4">
+            <div className={`p-6 rounded-2xl border relative overflow-hidden space-y-4 ${
+              isLightMode ? 'bg-stone-50 border-orange-300' : 'bg-[#171411] border-[#E87532]/40'
+            }`}>
               <div className="animate-copper-scanline" />
               
-              <div className="flex items-center justify-between text-xs text-[#BAAD9A]">
+              <div className="flex items-center justify-between text-xs theme-text-muted">
                 <span>INVESTIGATION IN PROGRESS: {inputQuery}</span>
-                <span>{scanProgress}% COMPLETE</span>
+                <span className="text-[#E87532] font-bold">{scanProgress}% COMPLETE</span>
               </div>
               
-              <div className="w-full h-2 rounded-full bg-[#211C18] overflow-hidden border border-white/5">
+              <div className={`w-full h-2 rounded-full overflow-hidden border ${
+                isLightMode ? 'bg-stone-200 border-stone-300' : 'bg-[#211C18] border-white/5'
+              }`}>
                 <div
-                  className="h-full bg-gradient-to-r from-[#955D31] to-[#E87532] transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-orange-600 to-amber-600 transition-all duration-300"
                   style={{ width: `${scanProgress}%` }}
                 />
               </div>
 
-              <div className="text-xs text-[#F3EEE7]">
+              <div className="text-xs theme-text-primary">
                 <span>&gt; {currentStage}</span>
               </div>
             </div>
@@ -173,28 +179,36 @@ export default function Scanner({ targetQuery, onResetTarget }) {
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
-                <div className="p-6 rounded-2xl bg-[#171411] border border-[#E87532]/30 flex items-center gap-5">
-                  <div className="w-16 h-16 rounded-full bg-[#211C18] border-2 border-[#E87532] flex items-center justify-center font-bold text-[#E87532] text-xl shadow-[0_0_20px_rgba(232,117,50,0.3)]">
+                <div className={`p-6 rounded-2xl border flex items-center gap-5 ${
+                  isLightMode ? 'bg-orange-50/60 border-orange-200' : 'bg-[#171411] border-[#E87532]/30'
+                }`}>
+                  <div className="w-16 h-16 rounded-full bg-orange-600/10 border-2 border-orange-500 flex items-center justify-center font-bold text-[#E87532] text-xl shadow-md">
                     {scanResults.confidence}%
                   </div>
                   <div>
-                    <span className="text-[10px] text-[#BAAD9A] uppercase tracking-wider block font-bold">Investigative Score</span>
-                    <div className="text-sm font-bold text-[#F3EEE7]">{scanResults.riskLevel}</div>
-                    <p className="text-xs text-[#A9A097]">4 Evidence Artifacts</p>
+                    <span className="text-[10px] theme-text-muted uppercase tracking-wider block font-bold">Investigative Score</span>
+                    <div className="text-sm font-bold theme-text-primary">{scanResults.riskLevel}</div>
+                    <p className="text-xs theme-text-muted">4 Evidence Artifacts</p>
                   </div>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-[#171411] border border-white/10 flex flex-col justify-between">
-                  <span className="text-[10px] text-[#A9A097] uppercase">Target Entity</span>
-                  <div className="text-sm font-bold text-[#BAAD9A] truncate">{scanResults.target}</div>
-                  <span className="text-[11px] text-[#A9A097]">Timestamp: {scanResults.timestamp}</span>
+                <div className={`p-6 rounded-2xl border flex flex-col justify-between ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/10'
+                }`}>
+                  <span className="text-[10px] theme-text-muted uppercase">Target Entity</span>
+                  <div className="text-sm font-bold text-[#E87532] truncate">{scanResults.target}</div>
+                  <span className="text-[11px] theme-text-muted">Timestamp: {scanResults.timestamp}</span>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-[#171411] border border-white/10 flex flex-col justify-between">
-                  <span className="text-[10px] text-[#A9A097] uppercase">Correlated Signals</span>
+                <div className={`p-6 rounded-2xl border flex flex-col justify-between ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/10'
+                }`}>
+                  <span className="text-[10px] theme-text-muted uppercase">Correlated Signals</span>
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {scanResults.exposedFields.map((field, idx) => (
-                      <span key={idx} className="px-2 py-0.5 rounded text-[10px] bg-[#211C18] border border-white/10 text-[#F3EEE7]">
+                      <span key={idx} className={`px-2 py-0.5 rounded text-[10px] border ${
+                        isLightMode ? 'bg-white border-stone-300 text-stone-800' : 'bg-[#211C18] border-white/10 text-[#F3EEE7]'
+                      }`}>
                         {field}
                       </span>
                     ))}
@@ -205,9 +219,9 @@ export default function Scanner({ targetQuery, onResetTarget }) {
 
               {/* Leaks List */}
               <div className="space-y-3">
-                <div className="text-xs uppercase tracking-wider text-[#A9A097] flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="text-xs uppercase tracking-wider theme-text-muted flex items-center justify-between border-b theme-border pb-3">
                   <span>Correlated Intelligence Artifacts ({scanResults.breaches.length})</span>
-                  <button onClick={() => alert('Exporting Investigation PDF Brief...')} className="text-[#BAAD9A] hover:underline flex items-center gap-1">
+                  <button onClick={() => alert('Exporting Investigation PDF Brief...')} className="text-[#E87532] hover:underline flex items-center gap-1 font-bold">
                     Export Report <Download className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -215,22 +229,26 @@ export default function Scanner({ targetQuery, onResetTarget }) {
                 {scanResults.breaches.map((b, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl bg-[#171411] border border-white/10 hover:border-[#E87532]/40 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className={`p-5 rounded-2xl border transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                      isLightMode ? 'bg-stone-50 border-stone-200 hover:border-orange-400' : 'bg-[#171411] border-white/10 hover:border-[#E87532]/40'
+                    }`}
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-[#211C18] text-[#E87532] border border-[#E87532]/40">
+                        <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-orange-500/10 text-orange-600 border border-orange-500/30">
                           {b.severity}
                         </span>
-                        <h4 className="text-sm font-bold text-white">{b.name}</h4>
-                        <span className="text-xs text-[#A9A097]">• {b.date}</span>
+                        <h4 className="text-sm font-bold theme-text-primary">{b.name}</h4>
+                        <span className="text-xs theme-text-muted">• {b.date}</span>
                       </div>
-                      <p className="text-xs text-[#A9A097]">{b.details}</p>
+                      <p className="text-xs theme-text-muted">{b.details}</p>
                     </div>
 
                     <button
                       onClick={() => alert(`Triggering evidence mitigation for ${b.name}`)}
-                      className="px-4 py-2 rounded-xl text-xs font-bold text-[#BAAD9A] bg-[#211C18] border border-white/10 hover:border-[#E87532] hover:text-[#E87532] transition-all shrink-0"
+                      className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all shrink-0 ${
+                        isLightMode ? 'bg-white border-stone-300 text-orange-600 hover:bg-orange-50' : 'bg-[#211C18] border-white/10 text-[#BAAD9A] hover:border-[#E87532] hover:text-[#E87532]'
+                      }`}
                     >
                       Mitigate Signal
                     </button>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Lock, Eye, Zap, ShieldCheck, Terminal, Network, Key } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function Features() {
+export default function Features({ isLightMode }) {
   const featureList = [
     {
       icon: Eye,
@@ -43,8 +43,8 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-24 relative bg-[#0C0702] border-t border-[rgba(255,106,0,0.12)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" className="py-28 relative theme-section-bg border-t theme-border font-mono">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
         <motion.div
@@ -52,16 +52,16 @@ export default function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+          className="text-center max-w-3xl mx-auto space-y-4"
         >
-          <span className="editorial-badge">
-            <Lock className="w-3.5 h-3.5 text-[#FF6A00]" />
+          <span className="spatial-badge">
+            <Lock className="w-3.5 h-3.5 text-[#E87532]" />
             ENTERPRISE CAPABILITIES
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight font-mono">
+          <h2 className="text-3xl sm:text-5xl font-black theme-text-primary tracking-tight">
             Built for Modern Cyber Defense
           </h2>
-          <p className="text-xs sm:text-sm text-[#9A948C] font-mono">
+          <p className="text-xs sm:text-sm theme-text-muted">
             Complete dark web threat intelligence tailored for security operations & enterprise risk teams.
           </p>
         </motion.div>
@@ -78,22 +78,24 @@ export default function Features() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="editorial-card p-8 rounded-3xl space-y-6 flex flex-col justify-between group"
+                className="spatial-card p-8 rounded-3xl space-y-6 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-[#1A1008] border border-[rgba(255,106,0,0.3)] flex items-center justify-center text-[#FF6A00] group-hover:border-[#FF6A00] transition-colors">
+                    <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-colors ${
+                      isLightMode ? 'bg-orange-50 border-orange-200 text-orange-600' : 'bg-[#211C18] border-[#955D31]/30 text-[#E87532]'
+                    }`}>
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="editorial-badge text-[9px]">
+                    <span className="spatial-badge text-[9px]">
                       {feat.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold font-mono text-white mb-2 group-hover:text-[#FF9D4D] transition-colors">
+                  <h3 className="text-lg font-bold theme-text-primary mb-2 group-hover:text-[#E87532] transition-colors">
                     {feat.title}
                   </h3>
-                  <p className="text-xs text-[#9A948C] leading-relaxed">
+                  <p className="text-xs theme-text-muted leading-relaxed font-sans">
                     {feat.description}
                   </p>
                 </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Play, Pause, AlertTriangle, X, Hash } from 'lucide-react';
+import { Activity, Play, Pause, AlertTriangle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function LiveFeed() {
+export default function LiveFeed({ isLightMode }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [selectedSeverity, setSelectedSeverity] = useState('ALL');
   const [selectedIncident, setSelectedIncident] = useState(null);
@@ -85,7 +85,7 @@ export default function LiveFeed() {
   });
 
   return (
-    <section id="live-feed" className="py-28 relative bg-[#171411] border-y border-[#955D31]/20">
+    <section id="live-feed" className="py-28 relative theme-section-bg border-y theme-border">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 font-mono">
         
         {/* Header */}
@@ -95,7 +95,7 @@ export default function LiveFeed() {
               <Activity className="w-3.5 h-3.5 text-[#E87532] animate-pulse" />
               NARROW EDITORIAL STREAM
             </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-[#F3EEE7] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black theme-text-primary tracking-tight">
               LIVE INTELLIGENCE
             </h2>
           </div>
@@ -103,38 +103,41 @@ export default function LiveFeed() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-[#211C18] text-[#BAAD9A] border border-white/10"
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border ${
+                isLightMode ? 'bg-white text-stone-800 border-stone-300' : 'bg-[#211C18] text-[#BAAD9A] border-white/10'
+              }`}
             >
-              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+              {isPlaying ? <Pause className="w-3.5 h-3.5 text-orange-600" /> : <Play className="w-3.5 h-3.5 text-orange-600" />}
               {isPlaying ? 'Live' : 'Paused'}
             </button>
           </div>
         </div>
 
         {/* Editorial Narrow Feed */}
-        <div className="spatial-card rounded-3xl border border-[#955D31]/30 overflow-hidden divide-y divide-white/5 text-xs">
+        <div className="spatial-card rounded-3xl border theme-border overflow-hidden divide-y divide-white/5 text-xs">
           {filteredIncidents.map((inc, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               onClick={() => setSelectedIncident(inc)}
-              className="p-5 hover:bg-[#2A241F]/80 transition-colors cursor-pointer flex items-center justify-between gap-4 group"
+              className={`p-5 transition-colors cursor-pointer flex items-center justify-between gap-4 group ${
+                isLightMode ? 'hover:bg-stone-100' : 'hover:bg-[#2A241F]/80'
+              }`}
             >
               <div className="flex items-center gap-4">
-                <span className="text-[#A9A097] text-[11px] shrink-0 font-bold">{inc.timestamp}</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#211C18] text-[#BAAD9A] border border-white/10">
+                <span className="theme-text-muted text-[11px] shrink-0 font-bold">{inc.timestamp}</span>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
+                  isLightMode ? 'bg-stone-100 border-stone-300 text-stone-800' : 'bg-[#211C18] border-white/10 text-[#BAAD9A]'
+                }`}>
                   {inc.category}
                 </span>
-                <span className="text-[#F3EEE7] font-bold group-hover:text-[#E87532] transition-colors truncate">
+                <span className="theme-text-primary font-bold group-hover:text-[#E87532] transition-colors truncate">
                   {inc.title}
                 </span>
               </div>
 
-              <span className={`px-2 py-0.5 rounded text-[10px] font-bold shrink-0 ${
-                inc.severity === 'HIGH' ? 'bg-[#211C18] text-[#E87532] border border-[#E87532]/40' :
-                'bg-[#211C18] text-[#BAAD9A] border border-white/10'
-              }`}>
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold shrink-0 bg-orange-500/10 text-orange-600 border border-orange-500/30">
                 {inc.severity}
               </span>
             </motion.div>
@@ -144,31 +147,39 @@ export default function LiveFeed() {
         {/* Incident Detail Overlay */}
         <AnimatePresence>
           {selectedIncident && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#171411]/90 backdrop-blur-md">
+            <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md ${
+              isLightMode ? 'bg-stone-900/40' : 'bg-[#171411]/90'
+            }`}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="spatial-card w-full max-w-lg rounded-3xl border border-[#E87532]/40 p-6 space-y-4 relative shadow-[0_0_50px_rgba(232,117,50,0.2)] text-xs font-mono"
+                className="spatial-card w-full max-w-lg rounded-3xl border border-[#E87532]/40 p-6 space-y-4 relative shadow-2xl text-xs font-mono"
               >
                 <button
                   onClick={() => setSelectedIncident(null)}
-                  className="absolute top-5 right-5 p-2 rounded-xl text-[#A9A097] hover:text-white bg-[#211C18] border border-white/10"
+                  className={`absolute top-5 right-5 p-2 rounded-xl border ${
+                    isLightMode ? 'bg-stone-100 border-stone-300 text-stone-700' : 'bg-[#211C18] border-white/10 text-[#A9A097]'
+                  }`}
                 >
                   <X className="w-4 h-4" />
                 </button>
 
                 <div className="space-y-1">
                   <span className="text-[10px] text-[#E87532] font-bold">{selectedIncident.timestamp} • {selectedIncident.category}</span>
-                  <h3 className="text-lg font-bold text-white">{selectedIncident.title}</h3>
-                  <span className="text-[#A9A097] text-[11px]">Source: {selectedIncident.source}</span>
+                  <h3 className="text-lg font-bold theme-text-primary">{selectedIncident.title}</h3>
+                  <span className="theme-text-muted text-[11px]">Source: {selectedIncident.source}</span>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#171411] border border-white/10 text-[#F3EEE7] leading-relaxed">
+                <div className={`p-4 rounded-2xl border theme-text-primary leading-relaxed ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/10'
+                }`}>
                   {selectedIncident.details}
                 </div>
 
-                <div className="p-3 rounded-xl bg-[#171411] text-[#BAAD9A] border border-white/10 space-y-1">
+                <div className={`p-3 rounded-xl border theme-text-muted space-y-1 ${
+                  isLightMode ? 'bg-stone-50 border-stone-200' : 'bg-[#171411] border-white/10'
+                }`}>
                   {selectedIncident.iocs.map((ioc, idx) => (
                     <div key={idx}>&gt; {ioc}</div>
                   ))}
@@ -177,7 +188,7 @@ export default function LiveFeed() {
                 <div className="flex justify-end pt-2">
                   <button
                     onClick={() => setSelectedIncident(null)}
-                    className="px-5 py-2 rounded-xl font-bold bg-[#E87532] text-[#171411]"
+                    className="px-5 py-2 rounded-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 text-white"
                   >
                     Close
                   </button>

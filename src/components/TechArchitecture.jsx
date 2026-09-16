@@ -1,8 +1,8 @@
 import React from 'react';
-import { Code, Terminal, Layers, Database, Cpu } from 'lucide-react';
+import { Code } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function TechArchitecture() {
+export default function TechArchitecture({ isLightMode }) {
   const stackItems = [
     { tech: 'PYTHON', role: 'AI / ML / NLP / DATA PROCESSING' },
     { tech: 'FASTAPI', role: 'BACKEND / REST APIs' },
@@ -13,7 +13,7 @@ export default function TechArchitecture() {
   ];
 
   return (
-    <section id="architecture" className="py-28 relative bg-[#171411] border-t border-[#955D31]/20">
+    <section id="architecture" className="py-28 relative theme-section-bg border-t theme-border font-mono">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
@@ -28,10 +28,10 @@ export default function TechArchitecture() {
             <Code className="w-3.5 h-3.5 text-[#E87532]" />
             TECHNICAL SPECIFICATIONS
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#F3EEE7] font-mono tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black theme-text-primary tracking-tight">
             TECHNOLOGY STACK
           </h2>
-          <p className="text-xs sm:text-sm text-[#A9A097] font-mono">
+          <p className="text-xs sm:text-sm theme-text-muted">
             Clean architectural foundation powering dark web crawling, graph neural inference, and 3D spatial visualization.
           </p>
         </motion.div>
@@ -46,13 +46,13 @@ export default function TechArchitecture() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="spatial-card p-6 rounded-3xl space-y-3 border border-white/5 hover:border-[#E87532]/40 transition-colors"
+              className="spatial-card p-6 rounded-3xl space-y-3 transition-colors"
             >
               <div className="flex items-center justify-between text-[#E87532] font-bold">
                 <span className="text-lg font-black">{item.tech}</span>
-                <span className="text-[10px] text-[#A9A097]">0{idx + 1}</span>
+                <span className="text-[10px] theme-text-muted">0{idx + 1}</span>
               </div>
-              <p className="text-[#BAAD9A] font-bold tracking-wider">
+              <p className="theme-text-muted font-bold tracking-wider">
                 {item.role}
               </p>
             </motion.div>

@@ -20,7 +20,7 @@
   --bg-dark: #FAF8F5;
   --bg-secondary: #FFFFFF;
   --bg-elevated: #F3EFEA;
-  --muted-brown: #D6D3D1;
+  --muted-brown: #E7E5E4;
   --warm-neutral: #78350F;
   --light-neutral: #92400E;
   --accent-copper: #D97706;
@@ -58,6 +58,37 @@
       radial-gradient(circle at 15% 75%, rgba(249, 115, 22, 0.1) 0%, transparent 55%);
     background-attachment: fixed;
   }
+}
+
+/* Theme Utilities */
+.theme-section-bg {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-section-bg-alt {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-card-bg {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-text-primary {
+  color: var(--text-primary);
+}
+
+.theme-text-muted {
+  color: var(--text-secondary);
+}
+
+.theme-border {
+  border-color: var(--border-copper);
 }
 
 /* Gradient Text Classes */
