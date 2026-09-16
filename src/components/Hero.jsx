@@ -1,53 +1,58 @@
 import React, { useState } from 'react';
-import { Terminal, ShieldAlert, Network, ArrowRight, Search, Sparkles, Hash } from 'lucide-react';
+import { Terminal, ArrowRight, Sparkles, Compass, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
-import KnowledgeGraphCanvas from './KnowledgeGraphCanvas';
+import ThreeGraphScene from './ThreeGraphScene';
+import SpatialDetailPanel from './SpatialDetailPanel';
 
 export default function Hero({ onStartScan }) {
-  const [query, setQuery] = useState('');
+  const [selectedSpatialNode, setSelectedSpatialNode] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onStartScan(query);
-    }
+  const handleExploreClick = () => {
+    const el = document.getElementById('scanner');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleWorkflowClick = () => {
+    const el = document.getElementById('workflow');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="relative pt-12 pb-20 overflow-hidden bg-[#080501]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="hero" className="relative min-h-[90vh] lg:min-h-screen pt-4 pb-16 overflow-hidden bg-[#171411] flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
-        {/* Top Editorial Badge */}
+        {/* Top Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-3 mb-8"
+          className="flex items-center gap-3 mb-6"
         >
-          <span className="editorial-badge">
-            <Sparkles className="w-3.5 h-3.5 text-[#FF6A00]" />
-            SIH-2025 AI THREAT ATTRIBUTION SYSTEM
+          <span className="spatial-badge">
+            <Sparkles className="w-3.5 h-3.5 text-[#E87532]" />
+            AI-ASSISTED DARK WEB INTELLIGENCE
           </span>
-          <span className="hidden sm:inline-block text-[11px] font-mono text-[#9A948C]">
-            PROTOTYPE BENCHMARK: 1.4M INDEXED ENTITIES
+          <span className="hidden sm:inline-block text-[11px] font-mono text-[#A9A097]">
+            SIH BENCHMARK • 1.4M INDEXED NODES
           </span>
         </motion.div>
 
-        {/* Hero Grid: Left Editorial Narrative / Right Knowledge Graph Canvas */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          {/* Left Column: Headline & Fast Audit Input */}
-          <div className="lg:col-span-6 space-y-8">
+          {/* Left Column Narrative */}
+          <div className="lg:col-span-5 space-y-8">
             
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-6xl font-black text-[#F5F5F0] tracking-tight leading-[1.05] font-mono"
+              className="text-4xl sm:text-6xl font-black text-[#F3EEE7] tracking-tight leading-[1.05] font-mono"
             >
-              Attributing <br />
-              <span className="text-[#FF6A00] underline decoration-[rgba(255,106,0,0.4)] underline-offset-8">
-                the Unseen.
+              CONNECT THE <br />
+              FOOTPRINTS. <br />
+              <span className="text-[#E87532] underline decoration-[#955D31]/50 underline-offset-8">
+                REVEAL THE NETWORK.
               </span>
             </motion.h1>
 
@@ -55,75 +60,67 @@ export default function Hero({ onStartScan }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg text-[#9A948C] leading-relaxed max-w-xl font-sans"
+              className="text-base sm:text-lg text-[#A9A097] leading-relaxed font-sans max-w-lg"
             >
-              Unmasking dark web threat actors through multi-modal graph AI, stealer log session extraction, and cross-platform identity correlation across TOR hidden services.
+              DARKTRACE correlates fragmented dark-web identities, infrastructure, behaviour and digital evidence into explainable threat-actor attribution hypotheses.
             </motion.p>
 
-            {/* Fast Audit Form */}
-            <motion.form
+            {/* Action Buttons */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-3 max-w-lg"
+              className="flex flex-wrap items-center gap-4 font-mono text-xs"
             >
-              <div className="relative flex-1">
-                <Search className="w-4 h-4 text-[#FF6A00] absolute left-4 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Enter target domain or threat alias..."
-                  className="w-full pl-11 pr-4 py-3.5 bg-[#120A04] text-[#F5F5F0] font-mono text-xs rounded-2xl border border-[rgba(255,106,0,0.25)] focus:outline-none focus:border-[#FF6A00] transition-colors"
-                />
-              </div>
               <button
-                type="submit"
-                className="px-6 py-3.5 rounded-2xl font-mono font-bold text-xs text-[#080501] bg-[#FF6A00] hover:bg-[#FF9D4D] transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,106,0,0.3)] shrink-0"
+                onClick={handleExploreClick}
+                className="px-7 py-4 rounded-2xl font-bold text-[#171411] bg-[#E87532] hover:bg-[#955D31] hover:text-[#F3EEE7] transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(232,117,50,0.3)]"
               >
-                <span>Correlate Target</span>
+                <span>EXPLORE INTELLIGENCE</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-            </motion.form>
 
-            {/* Micro Stats Bar (Honest Benchmark Labels) */}
+              <button
+                onClick={handleWorkflowClick}
+                className="px-7 py-4 rounded-2xl font-bold text-[#F3EEE7] bg-[#211C18] border border-white/10 hover:border-[#E87532]/40 transition-all flex items-center justify-center gap-2"
+              >
+                <Eye className="w-4 h-4 text-[#BAAD9A]" />
+                <span>VIEW HOW IT WORKS</span>
+              </button>
+            </motion.div>
+
+            {/* Drag Cue Indicator */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="grid grid-cols-3 gap-4 pt-4 border-t border-white/5 font-mono"
+              className="pt-4 border-t border-white/5 flex items-center gap-3 font-mono text-xs text-[#BAAD9A]"
             >
-              <div>
-                <span className="text-[10px] text-[#9A948C] uppercase block">Indexed Nodes</span>
-                <span className="text-sm font-bold text-[#F5F5F0]">1,450,210</span>
-              </div>
-              <div>
-                <span className="text-[10px] text-[#9A948C] uppercase block">Graph Density</span>
-                <span className="text-sm font-bold text-[#FF9D4D]">94.2% Link Score</span>
-              </div>
-              <div>
-                <span className="text-[10px] text-[#9A948C] uppercase block">Benchmark Mode</span>
-                <span className="text-sm font-bold text-[#FF6A00]">SIH DEMO MATRIX</span>
-              </div>
+              <Compass className="w-4 h-4 text-[#E87532] animate-spin" />
+              <span>DRAG TO EXPLORE 3D GRAPH • ORBIT SPHERES</span>
             </motion.div>
 
           </div>
 
-          {/* Right Column: Interactive Threat Graph Canvas Component */}
+          {/* Right Column: Three.js 3D Graph Scene */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            id="knowledge-graph"
-            className="lg:col-span-6"
+            className="lg:col-span-7 relative"
           >
-            <KnowledgeGraphCanvas onSelectNode={(node) => onStartScan(node.label)} />
+            <ThreeGraphScene onSelectNode={(node) => setSelectedSpatialNode(node)} />
           </motion.div>
 
         </div>
 
       </div>
+
+      {/* Spatial Detail Panel Floating Overlay */}
+      <SpatialDetailPanel
+        entity={selectedSpatialNode}
+        onClose={() => setSelectedSpatialNode(null)}
+      />
     </section>
   );
 }

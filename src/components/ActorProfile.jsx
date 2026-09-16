@@ -6,30 +6,32 @@ export default function ActorProfile() {
   const [copiedWallet, setCopiedWallet] = useState(false);
 
   const actorData = {
-    codename: 'Phant0m_R00t',
+    codename: 'DARKWOLF23',
     threatGroup: 'APT-319 / DarkVault Syndicate',
-    confidenceScore: 94.2,
-    status: 'ACTIVE ATTRIBUTION',
+    confidenceScore: 87,
+    status: 'ATTRIBUTION HYPOTHESIS VERIFIED',
     primaryLanguage: 'Russian / English (Bilingual Stylometrics)',
-    firstSeen: 'October 2022',
+    firstSeen: 'October 2024',
     lastActive: '14 Minutes Ago (XSS.is)',
     financialTrace: '1F1tA1p2uA58...3vJ (18.4 BTC / ~$1,150,000 USD)',
+    stats: [
+      { label: 'CONNECTED ALIASES', count: '04 ALIASES' },
+      { label: 'BITCOIN WALLETS', count: '03 WALLETS' },
+      { label: 'PGP KEYS', count: '02 PGP KEYS' },
+      { label: 'MARKETPLACES', count: '07 MARKETPLACES' },
+      { label: 'DARK WEB FORUMS', count: '06 FORUMS' },
+    ],
     knownAliases: [
-      { forum: 'BreachForums v2', handle: 'Phant0m_Admin', rank: 'Root Broker' },
+      { forum: 'BreachForums v2', handle: 'DARKWOLF23', rank: 'Root Admin' },
       { forum: 'XSS.is Cyber Forum', handle: 'ShadowKernel', rank: 'Vulnerability Seller' },
       { forum: 'Telegram VIP Channel', handle: '@Phant0m_Logs', rank: 'Stealer Feed Admin' },
-      { forum: 'Exploit.in', handle: 'P_Root_99', rank: 'Exploit Developer' },
+      { forum: 'Exploit.in', handle: 'x_DarkWolf', rank: 'Exploit Developer' },
     ],
     linkedInfrastructure: [
       { type: 'TOR Exit Node', value: '185.220.101.5 (Germany)' },
       { type: 'C2 Command Server', value: '104.28.19.4:8443' },
       { type: 'Malware Family', value: 'RedLine / Lumma Stealer v4.2' },
       { type: 'PGP Fingerprint', value: '0x9F02A489-B12D-4C90' },
-    ],
-    primaryThreats: [
-      'Zero-Day Linux VPN RCE Exploits',
-      'Enterprise SSO Session Cookie Hijacking',
-      'Corporate Financial Database SQL Leaks'
     ]
   };
 
@@ -40,59 +42,69 @@ export default function ActorProfile() {
   };
 
   return (
-    <section id="actor-profile" className="py-24 relative bg-[#0C0702] border-t border-[rgba(255,106,0,0.12)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="actor-profile" className="py-28 relative bg-[#171411] border-t border-[#955D31]/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
-        {/* Editorial Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4"
         >
           <div>
-            <span className="editorial-badge mb-3 inline-flex">
-              <UserCheck className="w-3.5 h-3.5 text-[#FF6A00]" />
-              ATTRIBUTED THREAT DOSSIER
+            <span className="spatial-badge mb-3 inline-flex">
+              <UserCheck className="w-3.5 h-3.5 text-[#E87532]" />
+              DARKTRACE ACTOR PROFILE
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight font-mono">
-              Actor Profile: {actorData.codename}
+            <h2 className="text-3xl sm:text-5xl font-black text-[#F3EEE7] font-mono tracking-tight">
+              TARGET: {actorData.codename}
             </h2>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-[#9A948C]">Attribution Confidence:</span>
-            <span className="px-3 py-1 rounded-full bg-[#1A1008] border border-[#FF6A00]/40 text-[#FF9D4D] font-mono text-xs font-bold">
-              {actorData.confidenceScore}% VERIFIED
+          <div className="flex items-center gap-3 font-mono text-xs">
+            <span className="text-[#A9A097]">Attribution Hypothesis:</span>
+            <span className="px-3 py-1 rounded-full bg-[#2A241F] border border-[#E87532]/40 text-[#E87532] font-bold">
+              {actorData.confidenceScore}% INVESTIGATIVE CONFIDENCE
             </span>
           </div>
         </motion.div>
 
-        {/* Dossier Card Container */}
+        {/* 5-Count Connected Entity Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 font-mono text-xs">
+          {actorData.stats.map((st, i) => (
+            <div key={i} className="spatial-card p-4 rounded-2xl text-center space-y-1">
+              <span className="text-[10px] text-[#A9A097] uppercase block">{st.label}</span>
+              <span className="text-sm font-bold text-[#F3EEE7]">{st.count}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Dossier Container */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="editorial-card p-6 sm:p-10 rounded-3xl border border-[rgba(255,106,0,0.3)] space-y-8"
+          className="spatial-card p-6 sm:p-10 rounded-3xl space-y-8"
         >
-          {/* Top Key Specs */}
+          {/* Top Metadata */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-8 border-b border-white/10 font-mono text-xs">
-            <div className="space-y-1">
-              <span className="text-[#9A948C] uppercase tracking-wider text-[10px]">Threat Group</span>
-              <div className="text-[#F5F5F0] font-bold text-sm">{actorData.threatGroup}</div>
+            <div>
+              <span className="text-[#A9A097] uppercase text-[10px] block">Threat Syndicate</span>
+              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.threatGroup}</div>
             </div>
-            <div className="space-y-1">
-              <span className="text-[#9A948C] uppercase tracking-wider text-[10px]">Primary Language / Geo</span>
-              <div className="text-[#F5F5F0] font-bold text-sm">{actorData.primaryLanguage}</div>
+            <div>
+              <span className="text-[#A9A097] uppercase text-[10px] block">Language & Stylometrics</span>
+              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.primaryLanguage}</div>
             </div>
-            <div className="space-y-1">
-              <span className="text-[#9A948C] uppercase tracking-wider text-[10px]">First Seen / Last Active</span>
-              <div className="text-[#F5F5F0] font-bold text-sm">{actorData.lastActive}</div>
+            <div>
+              <span className="text-[#A9A097] uppercase text-[10px] block">First Seen / Last Active</span>
+              <div className="text-[#F3EEE7] font-bold text-sm">{actorData.lastActive}</div>
             </div>
-            <div className="space-y-1">
-              <span className="text-[#9A948C] uppercase tracking-wider text-[10px]">Financial Wallet</span>
-              <div className="text-[#FF9D4D] font-bold text-sm flex items-center justify-between">
+            <div>
+              <span className="text-[#A9A097] uppercase text-[10px] block">Primary Bitcoin Wallet</span>
+              <div className="text-[#BAAD9A] font-bold text-sm flex items-center justify-between">
                 <span className="truncate">{actorData.financialTrace}</span>
                 <button onClick={handleCopyWallet} className="ml-2 hover:text-white">
                   {copiedWallet ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -101,77 +113,47 @@ export default function ActorProfile() {
             </div>
           </div>
 
-          {/* Core Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Grid Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono text-xs">
             
-            {/* Left 6-cols: Cross-Forum Alias Matrix */}
-            <div className="lg:col-span-6 space-y-4">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#FF9D4D] flex items-center gap-2">
-                <Globe className="w-4 h-4 text-[#FF6A00]" /> Known Forum Handles & Persona Cross-Map
-              </h4>
-
-              <div className="space-y-3 font-mono text-xs">
-                {actorData.knownAliases.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 rounded-2xl bg-[#080501] border border-white/5 hover:border-[rgba(255,106,0,0.3)] transition-colors flex items-center justify-between"
-                  >
-                    <div>
-                      <span className="text-[#9A948C] text-[10px] uppercase block">{item.forum}</span>
-                      <span className="text-white font-bold">{item.handle}</span>
-                    </div>
-                    <span className="px-2.5 py-1 rounded bg-[#1A1008] border border-white/10 text-[#FF9D4D] text-[10px]">
-                      {item.rank}
-                    </span>
+            {/* Forum Aliases */}
+            <div className="lg:col-span-6 space-y-3">
+              <span className="text-[#BAAD9A] font-bold uppercase tracking-wider block">Connected Forum Aliases</span>
+              {actorData.knownAliases.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-[#171411] border border-white/5 flex items-center justify-between">
+                  <div>
+                    <span className="text-[#A9A097] text-[10px] uppercase block">{item.forum}</span>
+                    <span className="text-[#F3EEE7] font-bold">{item.handle}</span>
                   </div>
-                ))}
-              </div>
+                  <span className="px-2.5 py-1 rounded bg-[#211C18] border border-white/10 text-[#BAAD9A] text-[10px]">
+                    {item.rank}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            {/* Right 6-cols: Linked Infrastructure & Attack Vectors */}
-            <div className="lg:col-span-6 space-y-4">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[#FF9D4D] flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[#FF6A00]" /> Linked Infrastructure & Key Signatures
-              </h4>
-
-              <div className="space-y-3 font-mono text-xs">
-                {actorData.linkedInfrastructure.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 rounded-2xl bg-[#080501] border border-white/5 hover:border-[rgba(255,106,0,0.3)] transition-colors flex items-center justify-between"
-                  >
-                    <span className="text-[#9A948C] text-[11px]">{item.type}</span>
-                    <span className="text-[#F5F5F0] font-bold">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Primary Threat Vectors Tag List */}
-              <div className="pt-2">
-                <span className="text-[10px] font-mono text-[#9A948C] uppercase tracking-wider block mb-2">Key Threat Operations</span>
-                <div className="flex flex-wrap gap-2">
-                  {actorData.primaryThreats.map((t, i) => (
-                    <span key={i} className="px-3 py-1 rounded-xl text-[11px] font-mono bg-[#1A1008] border border-[#FF6A00]/20 text-[#F5F5F0]">
-                      {t}
-                    </span>
-                  ))}
+            {/* Infrastructure Nodes */}
+            <div className="lg:col-span-6 space-y-3">
+              <span className="text-[#BAAD9A] font-bold uppercase tracking-wider block">Linked Technical Infrastructure</span>
+              {actorData.linkedInfrastructure.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-[#171411] border border-white/5 flex items-center justify-between">
+                  <span className="text-[#A9A097] text-[11px]">{item.type}</span>
+                  <span className="text-[#F3EEE7] font-bold">{item.value}</span>
                 </div>
-              </div>
+              ))}
             </div>
 
           </div>
 
-          {/* Dossier Footer Action Bar */}
+          {/* Action Bar */}
           <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-            <span className="text-[#9A948C]">SIH Benchmark Dossier #APT-319-2025</span>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => alert('Generating PDF Intelligence Report for APT-319...')}
-                className="px-5 py-2.5 rounded-xl font-bold bg-[#120A04] border border-white/10 hover:border-[#FF6A00]/40 text-[#F5F5F0] transition-colors flex items-center gap-2"
-              >
-                <Download className="w-4 h-4 text-[#FF6A00]" /> Export Dossier PDF
-              </button>
-            </div>
+            <span className="text-[#A9A097]">Attribution Brief #DARKWOLF23-2025</span>
+            <button
+              onClick={() => alert('Exporting DARKWOLF23 Dossier PDF...')}
+              className="px-5 py-2.5 rounded-xl font-bold bg-[#211C18] border border-white/10 hover:border-[#E87532]/40 text-[#F3EEE7] transition-all flex items-center gap-2"
+            >
+              <Download className="w-4 h-4 text-[#E87532]" /> Export Dossier PDF
+            </button>
           </div>
 
         </motion.div>
