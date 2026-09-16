@@ -1,5 +1,6 @@
 import React from 'react';
-import { Lock, Eye, Zap, ShieldCheck, Terminal, AlertTriangle, Key, Network } from 'lucide-react';
+import { Lock, Eye, Zap, ShieldCheck, Terminal, Network, Key } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Features() {
   const featureList = [
@@ -42,50 +43,61 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-16 relative">
+    <section id="features" className="py-24 relative bg-[#0C0702] border-t border-[rgba(255,106,0,0.12)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-mono mb-3">
-            <Lock className="w-3.5 h-3.5" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+        >
+          <span className="editorial-badge">
+            <Lock className="w-3.5 h-3.5 text-[#FF6A00]" />
             ENTERPRISE CAPABILITIES
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight font-mono">
             Built for Modern Cyber Defense
           </h2>
-          <p className="mt-3 text-slate-400 text-sm">
+          <p className="text-xs sm:text-sm text-[#9A948C] font-mono">
             Complete dark web threat intelligence tailored for security operations & enterprise risk teams.
           </p>
-        </div>
+        </motion.div>
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featureList.map((feat, idx) => {
             const Icon = feat.icon;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="glass-panel glass-panel-hover p-6 rounded-3xl border border-slate-800/80 flex flex-col justify-between"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="editorial-card p-8 rounded-3xl space-y-6 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-[#1A1008] border border-[rgba(255,106,0,0.3)] flex items-center justify-center text-[#FF6A00] group-hover:border-[#FF6A00] transition-colors">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+                    <span className="editorial-badge text-[9px]">
                       {feat.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white font-mono mb-2">
+                  <h3 className="text-lg font-bold font-mono text-white mb-2 group-hover:text-[#FF9D4D] transition-colors">
                     {feat.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-[#9A948C] leading-relaxed">
                     {feat.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

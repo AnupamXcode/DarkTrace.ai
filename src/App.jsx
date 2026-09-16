@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import ProblemStatement from './components/ProblemStatement';
+import AttributionWorkflow from './components/AttributionWorkflow';
+import ActorProfile from './components/ActorProfile';
 import Scanner from './components/Scanner';
 import LiveFeed from './components/LiveFeed';
 import Metrics from './components/Metrics';
 import Features from './components/Features';
+import TechArchitecture from './components/TechArchitecture';
 import DeploymentModal from './components/DeploymentModal';
 import Footer from './components/Footer';
 
@@ -28,7 +32,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#080501] text-[#F5F5F0] selection:bg-[#FF6A00] selection:text-[#080501]">
       
       {/* Navigation Header */}
       <Header
@@ -36,13 +40,17 @@ export default function App() {
         onOpenDeployModal={() => setDeployModalOpen(true)}
       />
 
-      {/* Main Content Sections */}
+      {/* Main Narrative Content Sections */}
       <main>
         <Hero onStartScan={handleStartScan} />
+        <ProblemStatement />
+        <AttributionWorkflow />
+        <ActorProfile />
         <Scanner targetQuery={activeQuery} onResetTarget={() => setActiveQuery('')} />
         <LiveFeed />
         <Metrics />
         <Features />
+        <TechArchitecture />
       </main>
 
       {/* Footer */}

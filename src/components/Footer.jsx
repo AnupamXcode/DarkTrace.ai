@@ -1,50 +1,66 @@
 import React from 'react';
-import { ShieldAlert, Terminal, CheckCircle2 } from 'lucide-react';
-
+import { ShieldAlert, Rocket, Terminal, Heart } from 'lucide-react';
 
 export default function Footer({ onOpenDeployModal }) {
   return (
-    <footer className="border-t border-slate-800/80 bg-slate-950 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="py-16 bg-[#080501] border-t border-[rgba(255,106,0,0.15)] font-mono text-xs text-[#9A948C]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Top Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           
-          {/* Left Brand */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 flex items-center justify-center font-mono font-bold">
-              <ShieldAlert className="w-5 h-5" />
+          {/* Col 1: Brand */}
+          <div className="space-y-4 md:col-span-2">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-[#FF6A00]" />
+              <span className="font-black text-lg text-white">
+                DARK<span className="text-[#FF6A00]">TRACE</span>
+              </span>
+              <span className="editorial-badge text-[9px]">SIH-2025 PROTOTYPE</span>
             </div>
-            <div>
-              <div className="font-mono font-bold text-white text-base">
-                SHADOW<span className="text-cyan-400">INTEL</span>
+            <p className="text-xs text-[#9A948C] leading-relaxed max-w-sm font-sans">
+              AI-assisted dark-web threat actor attribution platform engineered for rapid artifact correlation, stylometric persona linking, and evidence fusion.
+            </p>
+          </div>
+
+          {/* Col 2: Navigation */}
+          <div className="space-y-3">
+            <span className="text-white font-bold text-xs uppercase tracking-wider block">System Navigation</span>
+            <ul className="space-y-2">
+              <li><a href="#workflow" className="hover:text-[#FF9D4D] transition-colors">Attribution Pipeline</a></li>
+              <li><a href="#knowledge-graph" className="hover:text-[#FF9D4D] transition-colors">Interactive Graph</a></li>
+              <li><a href="#actor-profile" className="hover:text-[#FF9D4D] transition-colors">Threat Actor Dossier</a></li>
+              <li><a href="#scanner" className="hover:text-[#FF9D4D] transition-colors">Scanner Audit Engine</a></li>
+              <li><a href="#metrics" className="hover:text-[#FF9D4D] transition-colors">Radar Risk Analytics</a></li>
+            </ul>
+          </div>
+
+          {/* Col 3: Deployment & Status */}
+          <div className="space-y-3">
+            <span className="text-white font-bold text-xs uppercase tracking-wider block">Deployment & Status</span>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span>TOR Nodes Indexed</span>
               </div>
-              <p className="text-xs text-slate-500 font-mono">Dark Web Intelligence & Threat Prevention Platform</p>
+              <button
+                onClick={onOpenDeployModal}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-[#F5F5F0] bg-[#120A04] border border-white/10 hover:border-[#FF6A00]/40 transition-all"
+              >
+                <Rocket className="w-3.5 h-3.5 text-[#FF9D4D]" />
+                Vercel Deploy Helper
+              </button>
             </div>
-          </div>
-
-          {/* Center Links */}
-          <div className="flex items-center gap-6 text-xs font-mono text-slate-400">
-            <a href="#scanner" className="hover:text-cyan-400 transition-colors">Scanner</a>
-            <a href="#live-feed" className="hover:text-cyan-400 transition-colors">Live Feed</a>
-            <a href="#metrics" className="hover:text-cyan-400 transition-colors">Metrics</a>
-            <button onClick={onOpenDeployModal} className="text-purple-400 hover:text-purple-300 font-bold transition-colors">
-              Deploy to Vercel
-            </button>
-          </div>
-
-          {/* Right Status */}
-          <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-3 py-1.5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Vercel Edge Ready</span>
           </div>
 
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
-          <p>© {new Date().getFullYear()} ShadowIntel Security. Built for SIH Dark Web Intelligence.</p>
-          <p className="flex items-center gap-1">
-            Optimized for <span className="text-white font-bold">Vercel Deployment</span>
-          </p>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
+          <span>© 2025 DARKTRACE.AI • SIH Hackathon Evaluation Build</span>
+          <span className="text-[#9A948C] flex items-center gap-1">
+            Built with React 19, Vite & Framer Motion
+          </span>
         </div>
 
       </div>

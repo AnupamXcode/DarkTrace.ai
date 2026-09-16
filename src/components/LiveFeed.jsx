@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, Play, Pause, AlertTriangle, ShieldAlert, Eye, Terminal, Filter, X, ExternalLink, Hash, Globe, Server } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LiveFeed() {
   const [isPlaying, setIsPlaying] = useState(true);
@@ -61,7 +62,6 @@ export default function LiveFeed() {
 
   const [incidents, setIncidents] = useState(initialIncidents);
 
-  // Live simulation: add new incident every 12 seconds if playing
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -95,30 +95,30 @@ export default function LiveFeed() {
   });
 
   return (
-    <section id="live-feed" className="py-16 relative bg-slate-950/40 border-y border-slate-900">
+    <section id="live-feed" className="py-24 relative bg-[#0C0702] border-y border-[rgba(255,106,0,0.12)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
           <div>
-            <div className="flex items-center gap-2 text-rose-400 font-mono text-xs uppercase tracking-wider mb-1">
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
-              Real-time Event Stream
-            </div>
-            <h2 className="text-3xl font-black text-white tracking-tight">
+            <span className="editorial-badge mb-2 inline-flex">
+              <Activity className="w-3.5 h-3.5 text-[#FF6A00] animate-pulse" />
+              REAL-TIME EVIDENCE STREAM
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight font-mono">
               Live Threat Intelligence Stream
             </h2>
           </div>
 
-          {/* Controls: Play/Pause & Filters */}
+          {/* Controls: Play/Pause & Severity Filters */}
           <div className="flex flex-wrap items-center gap-3">
             
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all border ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all border ${
                 isPlaying
-                  ? 'bg-emerald-950/80 text-emerald-400 border-emerald-500/30'
-                  : 'bg-amber-950/80 text-amber-400 border-amber-500/30'
+                  ? 'bg-[#1A1008] text-[#FF6A00] border-[#FF6A00]/40'
+                  : 'bg-[#120A04] text-[#9A948C] border-white/10'
               }`}
             >
               {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -126,15 +126,15 @@ export default function LiveFeed() {
             </button>
 
             {/* Severity Filter Pills */}
-            <div className="flex items-center p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono">
+            <div className="flex items-center p-1 rounded-xl bg-[#120A04] border border-white/10 text-xs font-mono">
               {['ALL', 'CRITICAL', 'HIGH', 'MEDIUM'].map(sev => (
                 <button
                   key={sev}
                   onClick={() => setSelectedSeverity(sev)}
                   className={`px-3 py-1 rounded-lg transition-all ${
                     selectedSeverity === sev
-                      ? 'bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-[#1A1008] text-[#FF9D4D] font-bold border border-[#FF6A00]/30'
+                      : 'text-[#9A948C] hover:text-[#F5F5F0]'
                   }`}
                 >
                   {sev}
@@ -146,120 +146,127 @@ export default function LiveFeed() {
         </div>
 
         {/* Incidents Stream Feed Container */}
-        <div className="glass-panel rounded-3xl border border-slate-800 overflow-hidden divide-y divide-slate-800/80">
+        <div className="editorial-card rounded-3xl border border-[rgba(255,106,0,0.2)] overflow-hidden divide-y divide-white/5 font-mono">
           {filteredIncidents.length === 0 ? (
-            <div className="p-8 text-center text-slate-500 font-mono text-sm">
+            <div className="p-8 text-center text-[#9A948C] text-xs">
               No incidents matching filter criteria.
             </div>
           ) : (
             filteredIncidents.map((inc) => (
-              <div
+              <motion.div
                 key={inc.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
                 onClick={() => setSelectedIncident(inc)}
-                className="p-5 hover:bg-slate-900/60 transition-colors cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                className="p-5 hover:bg-[#1A1008]/80 transition-colors cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 group"
               >
                 <div className="flex items-start gap-4">
                   <div className={`p-2.5 rounded-xl border mt-0.5 ${
-                    inc.severity === 'CRITICAL' ? 'bg-rose-950/80 border-rose-500/30 text-rose-400' :
-                    inc.severity === 'HIGH' ? 'bg-amber-950/80 border-amber-500/30 text-amber-400' :
-                    'bg-cyan-950/80 border-cyan-500/30 text-cyan-400'
+                    inc.severity === 'CRITICAL' ? 'bg-[#1A1008] border-[#FF6A00]/40 text-[#FF6A00]' :
+                    'bg-[#120A04] border-[#FF9D4D]/30 text-[#FF9D4D]'
                   }`}>
-                    <AlertTriangle className="w-5 h-5" />
+                    <AlertTriangle className="w-4 h-4" />
                   </div>
 
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-xs font-bold text-slate-500">{inc.id}</span>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
-                        inc.severity === 'CRITICAL' ? 'bg-rose-950 text-rose-400 border border-rose-600/40' :
-                        inc.severity === 'HIGH' ? 'bg-amber-950 text-amber-400 border border-amber-600/40' :
-                        'bg-cyan-950 text-cyan-400 border border-cyan-600/40'
+                    <div className="flex items-center gap-2 flex-wrap text-xs">
+                      <span className="font-bold text-[#9A948C]">{inc.id}</span>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        inc.severity === 'CRITICAL' ? 'bg-[#1A1008] text-[#FF6A00] border border-[#FF6A00]/40' :
+                        'bg-[#120A04] text-[#FF9D4D] border border-[#FF9D4D]/30'
                       }`}>
                         {inc.severity}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 text-slate-400 border border-slate-700">
+                      <span className="px-2 py-0.5 rounded text-[10px] bg-[#120A04] text-[#9A948C] border border-white/10">
                         {inc.category}
                       </span>
-                      <span className="text-xs text-slate-500 font-mono">• {inc.timestamp}</span>
+                      <span className="text-[#9A948C]">• {inc.timestamp}</span>
                     </div>
 
-                    <h3 className="mt-1 text-base font-bold text-white group-hover:text-cyan-400 transition-colors font-mono">
+                    <h3 className="mt-1 text-sm sm:text-base font-bold text-white group-hover:text-[#FF9D4D] transition-colors">
                       {inc.title}
                     </h3>
-                    <p className="mt-1 text-xs text-slate-400 line-clamp-1">{inc.details}</p>
+                    <p className="mt-1 text-xs text-[#9A948C] line-clamp-1">{inc.details}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3 self-end md:self-center">
-                  <span className="text-xs font-mono text-slate-500 hidden lg:inline">{inc.source}</span>
-                  <button className="px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium text-slate-300 bg-slate-900 border border-slate-700 group-hover:border-cyan-500/40 group-hover:text-cyan-300 transition-all">
+                  <span className="text-xs text-[#9A948C] hidden lg:inline">{inc.source}</span>
+                  <button className="px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#F5F5F0] bg-[#120A04] border border-white/10 group-hover:border-[#FF6A00]/40 group-hover:text-[#FF9D4D] transition-all">
                     Inspect IOCs
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))
           )}
         </div>
 
         {/* INCIDENT DETAIL MODAL */}
-        {selectedIncident && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="glass-panel w-full max-w-2xl rounded-3xl border border-cyan-500/30 p-6 sm:p-8 space-y-6 relative shadow-[0_0_50px_rgba(0,240,255,0.15)]">
-              
-              <button
-                onClick={() => setSelectedIncident(null)}
-                className="absolute top-6 right-6 p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800"
+        <AnimatePresence>
+          {selectedIncident && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080501]/90 backdrop-blur-md">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="editorial-card w-full max-w-2xl rounded-3xl border border-[#FF6A00]/40 p-6 sm:p-8 space-y-6 relative shadow-[0_0_50px_rgba(255,106,0,0.2)] font-mono"
               >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-cyan-400">{selectedIncident.id}</span>
-                  <span className="px-2.5 py-0.5 rounded text-xs font-bold font-mono bg-rose-950 text-rose-400 border border-rose-600/40">
-                    {selectedIncident.severity}
-                  </span>
-                </div>
-                <h3 className="text-xl font-black text-white font-mono">{selectedIncident.title}</h3>
-                <p className="text-xs font-mono text-slate-400">Source: <span className="text-cyan-300">{selectedIncident.source}</span></p>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-sm text-slate-300 leading-relaxed">
-                {selectedIncident.details}
-              </div>
-
-              <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                  <Hash className="w-3.5 h-3.5 text-cyan-400" /> Indicators of Compromise (IOCs)
-                </div>
-                <div className="p-4 rounded-2xl bg-slate-950 font-mono text-xs text-cyan-300 border border-slate-800 space-y-1">
-                  {selectedIncident.iocs.map((ioc, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className="text-slate-600">&gt;</span>
-                      <span>{ioc}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-2">
+                
                 <button
                   onClick={() => setSelectedIncident(null)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-mono text-slate-400 hover:text-white bg-slate-900 border border-slate-800"
+                  className="absolute top-6 right-6 p-2 rounded-xl text-[#9A948C] hover:text-white bg-[#120A04] border border-white/10"
                 >
-                  Close
+                  <X className="w-4 h-4" />
                 </button>
-                <button
-                  onClick={() => { alert('Mitigation action triggered!'); setSelectedIncident(null); }}
-                  className="px-6 py-2.5 rounded-xl text-xs font-mono font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300"
-                >
-                  Trigger Takedown Request
-                </button>
-              </div>
 
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-[#FF6A00]">{selectedIncident.id}</span>
+                    <span className="px-2.5 py-0.5 rounded text-xs font-bold bg-[#1A1008] text-[#FF6A00] border border-[#FF6A00]/40">
+                      {selectedIncident.severity}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-black text-white">{selectedIncident.title}</h3>
+                  <p className="text-xs text-[#9A948C]">Source: <span className="text-[#FF9D4D]">{selectedIncident.source}</span></p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#080501] border border-white/10 text-xs text-[#F5F5F0] leading-relaxed">
+                  {selectedIncident.details}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="text-xs uppercase tracking-wider text-[#9A948C] flex items-center gap-1">
+                    <Hash className="w-3.5 h-3.5 text-[#FF6A00]" /> Indicators of Compromise (IOCs)
+                  </div>
+                  <div className="p-4 rounded-2xl bg-[#080501] text-xs text-[#FF9D4D] border border-white/10 space-y-1">
+                    {selectedIncident.iocs.map((ioc, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="text-[#9A948C]">&gt;</span>
+                        <span>{ioc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-2">
+                  <button
+                    onClick={() => setSelectedIncident(null)}
+                    className="px-5 py-2.5 rounded-xl text-xs text-[#9A948C] hover:text-white bg-[#120A04] border border-white/10"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => { alert('Automated Takedown Request Submitted!'); setSelectedIncident(null); }}
+                    className="px-6 py-2.5 rounded-xl text-xs font-bold text-[#080501] bg-[#FF6A00] hover:bg-[#FF9D4D]"
+                  >
+                    Trigger Takedown Request
+                  </button>
+                </div>
+
+              </motion.div>
             </div>
-          </div>
-        )}
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
